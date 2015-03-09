@@ -1,5 +1,5 @@
 package Controller;
 
-public class Controller {
+public interface Controller {
 
 }
