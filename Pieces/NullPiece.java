@@ -16,6 +16,6 @@ public class NullPiece extends AbstractPiece {
 	}
 	
 	public int hashCode() {
-		return hashCode();
+		return hashCode() ^ "NullPiece".hashCode();
 	}
 }

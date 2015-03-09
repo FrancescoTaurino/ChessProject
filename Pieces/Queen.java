@@ -16,6 +16,6 @@ public class Queen extends AbstractPiece {
 	}
 	
 	public int hashCode() {
-		return hashCode();
+		return color.hashCode() ^ "Queen".hashCode();
 	}
 }

@@ -16,6 +16,6 @@ public class Pawn extends AbstractPiece {
 	}
 	
 	public int hashCode() {
-		return hashCode();
+		return color.hashCode() ^ "Pawn".hashCode();
 	}
 }

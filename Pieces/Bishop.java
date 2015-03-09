@@ -16,6 +16,6 @@ public class Bishop extends AbstractPiece {
 	}
 	
 	public int hashCode() {
-		return hashCode();
+		return color.hashCode() ^ "Bishop".hashCode();
 	}
 }

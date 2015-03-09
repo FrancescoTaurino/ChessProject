@@ -16,6 +16,6 @@ public class Rook extends AbstractPiece {
 	}
 	
 	public int hashCode() {
-		return hashCode();
+		return color.hashCode() ^ "Rook".hashCode();
 	}
 }

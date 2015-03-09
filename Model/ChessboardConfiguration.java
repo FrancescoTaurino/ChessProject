@@ -79,7 +79,7 @@ public class ChessboardConfiguration implements Configuration {
 			Configuration otherConfiguration = (Configuration) other;
 			for (int y = 0; y < 8; y++)
 				for (int x = 0; x < 8; x++)
-					if (at(x, y) !=(otherConfiguration.at(x, y)))
+					if (at(x, y) != (otherConfiguration.at(x, y)))
 						return false;
 
 			return true;
