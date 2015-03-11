@@ -1,5 +1,8 @@
 package View;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import Controller.Controller;
 import Model.Model;
 
@@ -10,4 +13,5 @@ public interface View {
 	void showSolvedDialog();
 	
 	void onConfiguration();
+	void onConfigurationLight(ArrayList<Point> list);
 }

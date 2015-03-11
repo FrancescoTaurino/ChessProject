@@ -13,6 +13,9 @@ import Pieces.Rook;
 public class ChessboardConfiguration implements Configuration {
 	private AbstractPiece[][] chessboard = new AbstractPiece[8][8];
 	
+	//Initially true because white starts 
+	private boolean turn = true;
+	
 	public ChessboardConfiguration() {
 		//Set black pieces
 		Color black = Color.BLACK;
@@ -95,5 +98,13 @@ public class ChessboardConfiguration implements Configuration {
 				hashCodeResult ^= at(x, y).hashCode(); 
 		
 		return hashCodeResult;				
+	}
+	
+	public void setTurn(boolean turn) {
+		this.turn = turn;
+	}
+	
+	public boolean getTurn() {
+		return turn;
 	}
 }

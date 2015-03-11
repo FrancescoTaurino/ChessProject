@@ -11,4 +11,8 @@ public interface Configuration {
 	
 	//Set a piece in x y position
 	public void set(int x, int y, AbstractPiece p);
+	
+	//Menage white or black turn
+	public void setTurn(boolean turn);
+	public boolean getTurn();
 }

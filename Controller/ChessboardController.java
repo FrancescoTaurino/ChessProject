@@ -17,4 +17,12 @@ public class ChessboardController implements Controller {
 		
 		view.setController(this);
 	}
+
+	public void light(int x, int y) {
+		mover.light(x, y);
+	}
+
+	public void move(int x, int y, ArrayList<Point> list) {
+		mover.move(x, y, list);		
+	}
 }

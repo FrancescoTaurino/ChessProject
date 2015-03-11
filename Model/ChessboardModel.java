@@ -1,5 +1,8 @@
 package Model;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import Pieces.AbstractPiece;
 import View.View;
 
@@ -24,6 +27,12 @@ public class ChessboardModel implements Model {
 			this.configuration = newConfiguration;
 			if (view != null)
 				view.onConfiguration();
+	}
+
+	public void setConfigurationLight(ArrayList<Point> list) {
+		if(view != null)
+			view.onConfigurationLight(list);
+		
 	}
 	
 	public void setView(View listener) {

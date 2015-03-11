@@ -1,5 +1,8 @@
 package Model;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import Pieces.AbstractPiece;
 import View.View;
 
@@ -10,5 +13,6 @@ public interface Model {
 		
 	//Set state changes
 	public void setConfiguration(Configuration configuration);
+	public void setConfigurationLight(ArrayList<Point> list);
 	public void setView(View listener);
 }

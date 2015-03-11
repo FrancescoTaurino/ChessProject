@@ -3,6 +3,8 @@ package View;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,6 +13,7 @@ import javax.swing.JPanel;
 
 import Controller.Controller;
 import Model.Model;
+import Moves.Rules;
 import Pieces.AbstractPiece;
 import Pieces.Bishop;
 import Pieces.King;
@@ -27,6 +30,9 @@ public class ChessboardPanel extends JPanel implements View {
 	private final JFrame frame;
 	private Controller controller;
 	private final JButton[][] buttons = new JButton[8][8];
+	ArrayList<Point> list;
+	
+	private boolean lightOrMove = true;
 
 	public ChessboardPanel (Model model, JFrame frame) {
 		this.model = model;
@@ -48,6 +54,20 @@ public class ChessboardPanel extends JPanel implements View {
 	
 	private JButton mkButton(int x, int y) {
 		JButton p = setButtonProperties(setIconPiece(x, y));
+
+		p.addActionListener(event -> {
+			if(controller != null) {
+				if(lightOrMove) {
+					list = new Rules(model.getConfiguration()).light(x, y);
+					controller.light(x, y);
+					lightOrMove = false;
+				}
+				else {
+					controller.move(x, y, list);
+					lightOrMove = true;
+				}
+			}
+		});
 		
 		return p;
 	}
@@ -100,6 +120,23 @@ public class ChessboardPanel extends JPanel implements View {
 				iconSetter(buttons[x][y], x, y);
 				buttons[x][y].setContentAreaFilled(false);	
 			}
+		}
+	}
+	
+	public void onConfigurationLight(ArrayList<Point> list) {
+		//Light up of yellow clicked piece
+		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setContentAreaFilled(true);
+		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBorderPainted(false); 
+		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBackground(java.awt.Color.YELLOW);
+
+		//Remove clicked piece from list
+		list.remove(0);
+		
+		//Light up of red all the positions on which piece can move
+		for(Point p: list) {
+			buttons[(int) p.getX()][(int) p.getY()].setContentAreaFilled(true);
+			buttons[(int) p.getX()][(int) p.getY()].setBorderPainted(false); 
+			buttons[(int) p.getX()][(int) p.getY()].setBackground(java.awt.Color.RED);
 		}
 	}
 	
