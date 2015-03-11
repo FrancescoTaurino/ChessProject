@@ -1,13 +1,19 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import Controller.ChessboardController;
+import Controller.Controller;
 import Model.ChessboardConfiguration;
 import Model.ChessboardModel;
 
@@ -19,7 +25,30 @@ public class ChessboardFrame extends JFrame {
 		ChessboardPanel panel = new ChessboardPanel(model, this);
 		add(panel, BorderLayout.CENTER);
 		
-		new ChessboardController(panel);
+		Controller controller = new ChessboardController(panel);
+		
+		JPanel northPanel = new JPanel();
+		northPanel.setLayout(new GridLayout(1, 2));
+		
+		JButton newGame = new JButton("New Game");
+		newGame.setFont(new Font("title", Font.ITALIC, 20));
+		newGame.setContentAreaFilled(false);
+		newGame.setFocusPainted(false);
+		newGame.addActionListener(event -> {
+			controller.newGame();
+		});
+		
+		JButton quit = new JButton("Quit");
+		quit.setFont(new Font("title", Font.ITALIC, 20));
+		quit.setContentAreaFilled(false);
+		quit.setFocusPainted(false);
+		quit.addActionListener(event -> {
+			System.exit(0);
+		});
+		
+		northPanel.add(newGame);
+		northPanel.add(quit);
+		add(northPanel, BorderLayout.NORTH);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		int panelWidth = (int) (getPreferredSize().getWidth() / 2);

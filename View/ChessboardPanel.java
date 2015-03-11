@@ -87,6 +87,7 @@ public class ChessboardPanel extends JPanel implements View {
 		p.setPreferredSize(new Dimension(75, 75));
 		p.setContentAreaFilled(false);
 		p.setBorderPainted(false);
+		p.setFocusPainted(false);
 		
 		return p;
 	}	

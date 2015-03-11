@@ -29,18 +29,20 @@ public class SolvedDialog extends JDialog {
 		add(northPanel, BorderLayout.NORTH);
 
 		JButton newGame = new JButton("NEW GAME");
+		newGame.setFocusPainted(false);
 		newGame.addActionListener(event -> {
 			controller.newGame();
 			setVisible(false);
 		});
 		
-		JButton close = new JButton("EXIT");
-		close.addActionListener(event -> {
+		JButton quit = new JButton("QUIT");
+		quit.setFocusPainted(false);
+		quit.addActionListener(event -> {
 			System.exit(0);
 		});
 
 		southPanel.add(newGame);
-		southPanel.add(close);
+		southPanel.add(quit);
 		add(southPanel, BorderLayout.CENTER);
 		
 		setPreferredSize(new Dimension(300, 100));
