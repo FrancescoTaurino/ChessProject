@@ -3,6 +3,7 @@ package Moves;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import Model.ChessboardConfiguration;
 import Model.Configuration;
 import Pieces.AbstractPiece;
 import Pieces.Bishop;
@@ -25,6 +26,24 @@ public class Rules {
 		return configuration.at(x, y).getColor() != Color.NULL && 
 				((configuration.getTurn() == Color.WHITE && configuration.at(x, y).getColor() == Color.WHITE) || 
 				(configuration.getTurn() == Color.BLACK && configuration.at(x, y).getColor() == Color.BLACK));
+	}
+	
+	public int isSolved() {
+		AbstractPiece piece;
+		int flag = 0;
+		
+		for(int x = 0; x < 8; x++) {
+			for(int y = 0; y < 8; y++) {
+				piece = configuration.at(x, y);
+				//cont > 0 ha vinto Black , cont < 0 ha vinto White , cont = 0 si gioca ancora 
+				if(piece instanceof King && piece.getColor() == Color.BLACK)
+					flag++;
+				else if(piece instanceof King && piece.getColor() == Color.WHITE)
+					flag--;
+			}
+		}
+		
+		return flag;
 	}
 	
 	public Configuration move(int x, int y, ArrayList<Point> list) {
@@ -52,7 +71,7 @@ public class Rules {
 		}
 					
 		//Change turn
-		configuration.setTurn(configuration.getTurn() == Color.WHITE ? Color.BLACK : Color.WHITE);
+		configuration.setFlagTurn(configuration.getFlagTurn() == true ? false : true);
 	}
 
 	public ArrayList<Point> light(int x, int y) {
@@ -640,5 +659,9 @@ public class Rules {
 				if (configuration.at(x + 1, y - 1).getColor() == Color.WHITE)
 					result.add(new Point(x + 1, y - 1));
 		}
+	}
+
+	public Configuration newGame() {
+		return new ChessboardConfiguration();
 	}
 }

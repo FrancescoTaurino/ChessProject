@@ -95,18 +95,42 @@ public class ChessboardPanel extends JPanel implements View {
 	private void iconSetter(JButton p, int x, int y) {
 		AbstractPiece piece = model.at(x, y);
 		
-		if(piece instanceof Pawn)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WPawn.png") : ("src/Images/BPawn.png"))); 
-		else if(piece instanceof Rook)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WRook.png") : ("src/Images/BRook.png"))); 
-		else if(piece instanceof Knight)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WKnight.png") : ("src/Images/BKnight.png"))); 
-		else if(piece instanceof Bishop)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WBishop.png") : ("src/Images/BBishop.png")));
-		else if(piece instanceof Queen)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WQueen.png") : ("src/Images/BQueen.png")));
-		else if(piece instanceof King)
-			p.setIcon(new ImageIcon(piece.getColor() == Color.WHITE ? ("src/Images/WKing.png") : ("src/Images/BKing.png"))); 
+		if(piece instanceof Pawn) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WPawn.png" : "src/Images/WPawnMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BPawn.png" : "src/Images/BPawnMIN.png"));
+		}
+		else if(piece instanceof Rook) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WRook.png" : "src/Images/WRookMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BRook.png" : "src/Images/BRookMIN.png"));
+		}
+		else if(piece instanceof Bishop) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WBishop.png" : "src/Images/WBishopMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BBishop.png" : "src/Images/BBishopMIN.png"));
+		}
+		else if(piece instanceof Knight) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WKnight.png" : "src/Images/WKnightMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BKnight.png" : "src/Images/BKnightMIN.png"));
+		}
+		else if(piece instanceof Queen) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WQueen.png" : "src/Images/WQueenMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BQueen.png" : "src/Images/BQueenMIN.png"));
+		}
+		else if(piece instanceof King) {
+			if(piece.getColor() == Color.WHITE)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WKing.png" : "src/Images/WKingMIN.png"));
+			else if (piece.getColor() == Color.BLACK)
+				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BKing.png" : "src/Images/BKingMIN.png"));
+		}
 		else
 			p.setIcon(new ImageIcon("src/Images/NullPiece.png"));
 	}
@@ -120,7 +144,7 @@ public class ChessboardPanel extends JPanel implements View {
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				iconSetter(buttons[x][y], x, y);
-				buttons[x][y].setContentAreaFilled(false);	
+				buttons[x][y].setContentAreaFilled(false);
 			}
 		}
 	}
@@ -129,7 +153,7 @@ public class ChessboardPanel extends JPanel implements View {
 		//Light up of yellow clicked piece
 		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setContentAreaFilled(true);
 		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBorderPainted(false); 
-		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBackground(java.awt.Color.YELLOW);
+		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBackground(java.awt.Color.GRAY);
 
 		//Remove clicked piece from list
 		list.remove(0);
@@ -151,5 +175,6 @@ public class ChessboardPanel extends JPanel implements View {
 	}
 
 	public void showSolvedDialog() {
+		new SolvedDialog(frame, controller).setVisible(true);
 	}
 }

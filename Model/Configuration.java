@@ -14,6 +14,8 @@ public interface Configuration {
 	public void set(int x, int y, AbstractPiece p);
 	
 	//Menage white or black turn
+	public void setFlagTurn(boolean turn);
+	public boolean getFlagTurn();
 	public void setTurn(Color turn);
 	public Color getTurn();
 }

@@ -15,6 +15,7 @@ public class ChessboardConfiguration implements Configuration {
 	
 	//White starts 
 	private Color turn = Color.WHITE;
+	private boolean flagTurn = true;
 	
 	public ChessboardConfiguration() {
 		//Set black pieces
@@ -98,6 +99,14 @@ public class ChessboardConfiguration implements Configuration {
 				hashCodeResult ^= at(x, y).hashCode(); 
 		
 		return hashCodeResult;				
+	}
+	
+	public void setFlagTurn(boolean flagTurn) {
+		this.flagTurn = flagTurn;
+	}
+	
+	public boolean getFlagTurn() {
+		return flagTurn;
 	}
 	
 	public void setTurn(Color turn) {

@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import Moves.Mover;
-import Pieces.AbstractPiece;
+import Pieces.Color;
 import View.View;
 
 public class ChessboardController implements Controller {
@@ -23,10 +23,23 @@ public class ChessboardController implements Controller {
 	}
 
 	public void move(int x, int y, ArrayList<Point> list) {
-		mover.move(x, y, list);		
+		mover.move(x, y, list);	
+		if(mover.isSolved() != 0)
+			view.showSolvedDialog();
+		
+		//Change turn
+		view.getModel().getConfiguration().setTurn(view.getModel().getConfiguration().getFlagTurn() == false ? Color.BLACK : Color.WHITE);
 	}
 
 	public boolean checkClickConditions(int x, int y) {
 		return mover.checkClickConditions(x, y);
+	}
+
+	public int isSolved() {
+		return mover.isSolved();
+	}
+
+	public void newGame() {
+		mover.newGame();
 	}
 }
