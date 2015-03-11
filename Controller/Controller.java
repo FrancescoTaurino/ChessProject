@@ -3,6 +3,8 @@ package Controller;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import Pieces.AbstractPiece;
+
 public interface Controller {
 	//Checks if coordinates x y clicked are valid, if valid then light and move
 	boolean checkClickConditions(int x, int y);
@@ -16,4 +18,9 @@ public interface Controller {
 	
 	//Checks if game is solved: int > 0 Black wins, int < 0 White wins
 	int isSolved();
+	
+	//Menages a pawn promotion
+	int promotion();
+	void promotePawn(AbstractPiece piece);
+	
 }

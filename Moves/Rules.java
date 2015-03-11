@@ -35,13 +35,50 @@ public class Rules {
 		for(int x = 0; x < 8; x++) {
 			for(int y = 0; y < 8; y++) {
 				piece = configuration.at(x, y);
-				//cont > 0 ha vinto Black , cont < 0 ha vinto White , cont = 0 si gioca ancora 
 				if(piece instanceof King && piece.getColor() == Color.BLACK)
 					flag++;
 				else if(piece instanceof King && piece.getColor() == Color.WHITE)
 					flag--;
 			}
 		}
+		
+		return flag;
+	}
+	
+	private Point getCooPromotePawn() {
+		Point result = null;
+		
+		for(int y = 0; y < 8; y++) 
+			if(configuration.at(0, y) instanceof Pawn && configuration.at(0, y).getColor() == Color.WHITE) 
+				return new Point(0, y);
+		for(int y = 0; y < 8; y++) 
+			if(configuration.at(7, y) instanceof Pawn && configuration.at(7, y).getColor() == Color.BLACK) 
+				return new Point(7, y);
+		
+		return result;
+	}
+	
+	public Configuration promotePawn(AbstractPiece piece) {
+		Point cooPromotePawn = getCooPromotePawn();
+		
+		int x = (int) cooPromotePawn.getX();
+		int y = (int) cooPromotePawn.getY();
+		
+		configuration.set(x, y, piece);
+		
+		return configuration;
+	}
+	
+	//If white pawn crosses chessboard return -1, if black pawn crosses chessoboard return 1
+	public int promotion() {
+		int flag = 0;
+		
+		for(int y = 0; y < 8; y++) 
+			if(configuration.at(0, y) instanceof Pawn && (configuration.at(0, y).getColor() == Color.WHITE))
+				flag = -1;
+		for(int y = 0; y < 8; y++) 
+			if(configuration.at(7, y) instanceof Pawn && (configuration.at(0, y).getColor() == Color.BLACK))
+				flag = +1;
 		
 		return flag;
 	}

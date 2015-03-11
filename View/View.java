@@ -11,6 +11,7 @@ public interface View {
 	void setController(Controller controller);
 	
 	void showSolvedDialog();
+	void showPromotionDialog();
 	
 	void onConfiguration();
 	void onConfigurationLight(ArrayList<Point> list);

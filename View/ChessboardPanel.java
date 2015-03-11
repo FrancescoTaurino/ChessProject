@@ -178,4 +178,8 @@ public class ChessboardPanel extends JPanel implements View {
 	public void showSolvedDialog() {
 		new SolvedDialog(frame, controller).setVisible(true);
 	}
+
+	public void showPromotionDialog() {
+		new PromotionDialog(frame, controller).setVisible(true);
+	}
 }

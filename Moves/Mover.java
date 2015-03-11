@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import Model.Model;
+import Pieces.AbstractPiece;
 
 public class Mover {
 	private final Model model;
@@ -31,5 +32,14 @@ public class Mover {
 
 	public int isSolved() {
 		return new Rules(model.getConfiguration()).isSolved();
+	}
+
+	public int promotion() {
+		return new Rules(model.getConfiguration()).promotion();
+	}
+
+	public void promotePawn(AbstractPiece piece) {
+		model.setConfiguration(new Rules(model.getConfiguration()).promotePawn(piece));
+		
 	}
 }
