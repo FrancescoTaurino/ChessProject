@@ -59,8 +59,10 @@ public class ChessboardPanel extends JPanel implements View {
 			if(controller != null) {
 				if(lightOrMove) {
 					list = new Rules(model.getConfiguration()).light(x, y);
-					controller.light(x, y);
-					lightOrMove = false;
+					if(controller.checkClickConditions(x, y)) {
+						controller.light(x, y);
+						lightOrMove = false;
+					}
 				}
 				else {
 					controller.move(x, y, list);

@@ -21,6 +21,12 @@ public class Rules {
 		this.configuration = configuration;
 	}
 	
+	public boolean checkClickConditions(int x, int y) {
+		return configuration.at(x, y).getColor() != Color.NULL && 
+				((configuration.getTurn() == Color.WHITE && configuration.at(x, y).getColor() == Color.WHITE) || 
+				(configuration.getTurn() == Color.BLACK && configuration.at(x, y).getColor() == Color.BLACK));
+	}
+	
 	public Configuration move(int x, int y, ArrayList<Point> list) {
 		int X = (int) list.get(0).getX();
 		int Y = (int) list.get(0).getY();
@@ -46,7 +52,7 @@ public class Rules {
 		}
 					
 		//Change turn
-		configuration.setTurn(configuration.getTurn() == true ? false : true);
+		configuration.setTurn(configuration.getTurn() == Color.WHITE ? Color.BLACK : Color.WHITE);
 	}
 
 	public ArrayList<Point> light(int x, int y) {
@@ -619,7 +625,7 @@ public class Rules {
 		}
 		else {
 			if(x == 1) {
-				if(configuration.at(x + 1, y).getColor() == Color.NULL && configuration.at(x + 2, y).getColor() == Color.NULL) {
+				if(configuration.at(x + 1, y).getColor() == Color.NULL) {
 					result.add(new Point(x + 1, y));
 					result.add(new Point(x + 2, y));
 				}

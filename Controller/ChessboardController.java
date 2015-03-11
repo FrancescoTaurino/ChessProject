@@ -25,4 +25,8 @@ public class ChessboardController implements Controller {
 	public void move(int x, int y, ArrayList<Point> list) {
 		mover.move(x, y, list);		
 	}
+
+	public boolean checkClickConditions(int x, int y) {
+		return mover.checkClickConditions(x, y);
+	}
 }

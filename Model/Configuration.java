@@ -1,6 +1,7 @@
 package Model;
 
 import Pieces.AbstractPiece;
+import Pieces.Color;
 
 public interface Configuration {
 	//Return the piece in x y
@@ -13,6 +14,6 @@ public interface Configuration {
 	public void set(int x, int y, AbstractPiece p);
 	
 	//Menage white or black turn
-	public void setTurn(boolean turn);
-	public boolean getTurn();
+	public void setTurn(Color turn);
+	public Color getTurn();
 }

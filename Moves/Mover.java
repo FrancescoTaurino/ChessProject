@@ -19,4 +19,9 @@ public class Mover {
 	public void move(int x, int y, ArrayList<Point> list) {
 		model.setConfiguration(new Rules(model.getConfiguration()).move(x, y, list));
 	}
+
+	public boolean checkClickConditions(int x, int y) {
+		return new Rules(model.getConfiguration()).checkClickConditions(x, y);
+		
+	}
 }
