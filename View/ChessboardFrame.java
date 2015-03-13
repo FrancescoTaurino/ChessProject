@@ -23,7 +23,7 @@ public class ChessboardFrame extends JFrame {
 	public ChessboardFrame() {
 		ChessboardPanel panel = new ChessboardPanel(model, this);
 		add(panel, BorderLayout.CENTER);
-		
+
 		Controller controller = new ChessboardController(panel);
 		
 		JPanel northPanel = new JPanel();

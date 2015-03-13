@@ -3,6 +3,7 @@ package Controller;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import Model.Configuration;
 import Moves.Mover;
 import Pieces.AbstractPiece;
 import Pieces.Color;
@@ -25,29 +26,31 @@ public class ChessboardController implements Controller {
 
 	public void move(int x, int y, ArrayList<Point> list) {
 		mover.move(x, y, list);	
-		if(isSolved() != 0)
-			view.showSolvedDialog();
 		if(promotion() != 0)
 			view.showPromotionDialog();
 		
-		//Change turn
-		view.getModel().getConfiguration().setTurn(view.getModel().getConfiguration().getFlagTurn() == false ? Color.BLACK : Color.WHITE);
+		mover.check();
+		if(checkMate() != 0)
+			view.showSolvedDialog();
+		
+		Configuration configuration = view.getModel().getConfiguration();
+		configuration.setTurn(configuration.getFlagTurn() == true ? Color.WHITE : Color.BLACK);
 	}
 
 	public boolean checkClickConditions(int x, int y) {
 		return mover.checkClickConditions(x, y);
 	}
 
-	public int isSolved() {
-		return mover.isSolved();
+	public int checkMate() {
+		return mover.checkMate();
 	}
-
-	public void newGame() {
-		mover.newGame();
-	}
-
+	
 	public int promotion() {
 		return mover.promotion();
+	}
+	
+	public void newGame() {
+		mover.newGame();
 	}
 
 	public void promotePawn(AbstractPiece piece) {

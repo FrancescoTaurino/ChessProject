@@ -1,5 +1,7 @@
 package Model;
 
+import java.awt.Point;
+
 import Pieces.AbstractPiece;
 import Pieces.Bishop;
 import Pieces.Color;
@@ -16,6 +18,9 @@ public class ChessboardConfiguration implements Configuration {
 	//White starts 
 	private Color turn = Color.WHITE;
 	private boolean flagTurn = true;
+	//Initially no check
+	private boolean[] check = {false, false};
+
 	
 	public ChessboardConfiguration() {
 		//Set black pieces
@@ -101,6 +106,21 @@ public class ChessboardConfiguration implements Configuration {
 		return hashCodeResult;				
 	}
 	
+	public Point getKingLocation(Color color) {
+		Point[] kingsLocation = new Point[2];
+		
+		for(int y = 0; y < 8; y++) { 
+			for(int x = 0; x < 8; x++) {
+				if(chessboard[x][y] instanceof King && chessboard[x][y].getColor() == Color.WHITE)
+					kingsLocation[0] = new Point(x, y);
+				else if(chessboard[x][y] instanceof King && chessboard[x][y].getColor() == Color.BLACK)
+					kingsLocation[1] = new Point(x, y);
+			}
+		}
+						
+		return color == Color.WHITE ? kingsLocation[0] : kingsLocation[1];
+	}
+	
 	public void setFlagTurn(boolean flagTurn) {
 		this.flagTurn = flagTurn;
 	}
@@ -115,5 +135,14 @@ public class ChessboardConfiguration implements Configuration {
 	
 	public Color getTurn() {
 		return turn;
+	}
+
+
+	public void setCheck(int pos, boolean check) {
+		this.check[pos] = check;
+	}
+	
+	public boolean getCheck(int pos) {
+		return check[pos];
 	}
 }

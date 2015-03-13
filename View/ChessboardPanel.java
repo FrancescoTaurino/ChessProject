@@ -59,7 +59,7 @@ public class ChessboardPanel extends JPanel implements View {
 			if(controller != null) {
 				if(lightOrMove) {
 					list = new Rules(model.getConfiguration()).light(x, y);
-					if(controller.checkClickConditions(x, y)) {
+					if(controller.checkClickConditions(x, y) && list.size() > 1) {
 						controller.light(x, y);
 						lightOrMove = false;
 					}
@@ -92,45 +92,68 @@ public class ChessboardPanel extends JPanel implements View {
 		return p;
 	}	
 	
+	//chess.setRolloverIcon(new ImageIcon("Images/chess2.png"));
 	//Set the right icon for every piece on the chessboard
 	private void iconSetter(JButton p, int x, int y) {
 		AbstractPiece piece = model.at(x, y);
 		
 		if(piece instanceof Pawn) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WPawn.png" : "src/Images/WPawnMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BPawn.png" : "src/Images/BPawnMIN.png"));
+			if(piece.getColor() == Color.WHITE)  {
+				p.setIcon(new ImageIcon("src/Images/WPawnMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WPawn.png"));
+			}
+			else if(piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BPawnMIN.png"));
+			}
 		}
 		else if(piece instanceof Rook) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WRook.png" : "src/Images/WRookMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BRook.png" : "src/Images/BRookMIN.png"));
+			if(piece.getColor() == Color.WHITE) {
+				p.setIcon(new ImageIcon("src/Images/WRookMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WRook.png"));
+			}
+			else if (piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BRookMIN.png"));
+			}
 		}
 		else if(piece instanceof Bishop) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WBishop.png" : "src/Images/WBishopMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BBishop.png" : "src/Images/BBishopMIN.png"));
+			if(piece.getColor() == Color.WHITE) {
+				p.setIcon(new ImageIcon("src/Images/WBishopMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WBishop.png"));
+			}
+			else if (piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BBishopMIN.png"));
+				
+			}
 		}
 		else if(piece instanceof Knight) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WKnight.png" : "src/Images/WKnightMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BKnight.png" : "src/Images/BKnightMIN.png"));
+			if(piece.getColor() == Color.WHITE) {
+				p.setIcon(new ImageIcon("src/Images/WKnightMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WKnight.png"));
+			}
+			else if (piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BKnightMIN.png"));
+				
+			}
 		}
 		else if(piece instanceof Queen) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WQueen.png" : "src/Images/WQueenMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BQueen.png" : "src/Images/BQueenMIN.png"));
+			if(piece.getColor() == Color.WHITE) {
+				p.setIcon(new ImageIcon("src/Images/WQueenMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WQueen.png"));
+			}
+			else if (piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BQueenMIN.png"));
+				
+			}
 		}
 		else if(piece instanceof King) {
-			if(piece.getColor() == Color.WHITE)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == true ? "src/Images/WKing.png" : "src/Images/WKingMIN.png"));
-			else if (piece.getColor() == Color.BLACK)
-				p.setIcon(new ImageIcon(model.getConfiguration().getFlagTurn() == false ? "src/Images/BKing.png" : "src/Images/BKingMIN.png"));
+			if(piece.getColor() == Color.WHITE) {
+				p.setIcon(new ImageIcon("src/Images/WKingMIN.png"));
+				p.setRolloverIcon(new ImageIcon("src/Images/WKing.png"));
+			}
+			else if (piece.getColor() == Color.BLACK) {
+				p.setIcon(new ImageIcon("src/Images/BKingMIN.png"));
+			
+			}
 		}
 		else
 			p.setIcon(new ImageIcon("src/Images/NullPiece.png"));
@@ -138,32 +161,106 @@ public class ChessboardPanel extends JPanel implements View {
 	
 	//Draw an image of a chessboard as background
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		g.drawImage(new ImageIcon("src/Images/Chessboard.png").getImage(), 0, 0, null);
 	}
 	
 	public void onConfiguration() {
+		Color turn = model.getConfiguration().getTurn();
+		boolean flagTurn = model.getConfiguration().getFlagTurn();
+		
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				iconSetter(buttons[x][y], x, y);
+				buttons[x][y].setRolloverIcon(null);
 				buttons[x][y].setContentAreaFilled(false);
+				if(turn == Color.WHITE && flagTurn == false && model.at(x, y).getColor() == Color.BLACK) {
+					if(model.at(x, y) instanceof Pawn)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BPawn.png"));
+					else if(model.at(x, y) instanceof Rook)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BRook.png"));
+					else if(model.at(x, y) instanceof Knight)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BKnight.png"));
+					else if(model.at(x, y) instanceof Bishop)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BBishop.png"));
+					else if(model.at(x, y) instanceof Queen)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BQueen.png"));
+					else if(model.at(x, y) instanceof King)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BKing.png"));
+				}
+				if(turn == Color.WHITE && flagTurn == true && model.at(x, y).getColor() == Color.WHITE) {
+					if(model.at(x, y) instanceof Pawn)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WPawn.png"));
+					else if(model.at(x, y) instanceof Rook)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WRook.png"));
+					else if(model.at(x, y) instanceof Knight)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WKnight.png"));
+					else if(model.at(x, y) instanceof Bishop)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WBishop.png"));
+					else if(model.at(x, y) instanceof Queen)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WQueen.png"));
+					else if(model.at(x, y) instanceof King)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WKing.png"));
+				}
+				if(turn == Color.BLACK && flagTurn == true && model.at(x, y).getColor() == Color.WHITE) {
+					if(model.at(x, y) instanceof Pawn)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WPawn.png"));
+					else if(model.at(x, y) instanceof Rook)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WRook.png"));
+					else if(model.at(x, y) instanceof Knight)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WKnight.png"));
+					else if(model.at(x, y) instanceof Bishop)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WBishop.png"));
+					else if(model.at(x, y) instanceof Queen)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WQueen.png"));
+					else if(model.at(x, y) instanceof King)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/WKing.png"));
+				}
+				if(turn == Color.BLACK && flagTurn == false && model.at(x, y).getColor() == Color.BLACK) {
+					if(model.at(x, y) instanceof Pawn)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BPawn.png"));
+					else if(model.at(x, y) instanceof Rook)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BRook.png"));
+					else if(model.at(x, y) instanceof Knight)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BKnight.png"));
+					else if(model.at(x, y) instanceof Bishop)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BBishop.png"));
+					else if(model.at(x, y) instanceof Queen)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BQueen.png"));
+					else if(model.at(x, y) instanceof King)
+						buttons[x][y].setRolloverIcon(new ImageIcon("src/Images/BKing.png"));
+				}
 			}
-		}
+		}	
 	}
 	
 	public void onConfigurationLight(ArrayList<Point> list) {
-		//Light up of yellow clicked piece
-		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setContentAreaFilled(true);
-		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBorderPainted(false); 
-		buttons[(int) list.get(0).getX()][(int) list.get(0).getY()].setBackground(java.awt.Color.GRAY);
-
+		//Lights up of gray selected pieces 
+		Point p1 = list.get(0);
+		buttons[(int) p1.getX()][(int) p1.getY()].setContentAreaFilled(true);
+		buttons[(int) p1.getX()][(int) p1.getY()].setBackground(java.awt.Color.GRAY);
+		
 		//Remove clicked piece from list
 		list.remove(0);
-		
-		//Light up of red all the positions on which piece can move
+			
+		//Lights up of red all the positions on which piece can move
 		for(Point p: list) {
 			buttons[(int) p.getX()][(int) p.getY()].setContentAreaFilled(true);
-			buttons[(int) p.getX()][(int) p.getY()].setBorderPainted(false); 
 			buttons[(int) p.getX()][(int) p.getY()].setBackground(java.awt.Color.RED);
+		}
+	}
+	
+	public void onConfigurationCheck() {
+		Point e;
+		if(model.getConfiguration().getCheck(1) == true) {
+			e = model.getConfiguration().getKingLocation(Color.BLACK);
+			buttons[(int) e.getX()][(int) e.getY()].setContentAreaFilled(true);
+			buttons[(int) e.getX()][(int) e.getY()].setBackground(java.awt.Color.BLUE);
+		}
+		else if(model.getConfiguration().getCheck(0) == true) {
+			e = model.getConfiguration().getKingLocation(Color.WHITE);
+			buttons[(int) e.getX()][(int) e.getY()].setContentAreaFilled(true);
+			buttons[(int) e.getX()][(int) e.getY()].setBackground(java.awt.Color.BLUE);
 		}
 	}
 	

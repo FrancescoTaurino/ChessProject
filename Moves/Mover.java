@@ -24,10 +24,13 @@ public class Mover {
 	public void newGame() {
 		model.setConfiguration(new Rules(model.getConfiguration()).newGame());
 	}
+	
+	public void promotePawn(AbstractPiece piece) {
+		model.setConfiguration(new Rules(model.getConfiguration()).promotePawn(piece));	
+	}
 
 	public boolean checkClickConditions(int x, int y) {
 		return new Rules(model.getConfiguration()).checkClickConditions(x, y);
-		
 	}
 
 	public int isSolved() {
@@ -37,9 +40,13 @@ public class Mover {
 	public int promotion() {
 		return new Rules(model.getConfiguration()).promotion();
 	}
+	
+	public void check() {
+		new Rules(model.getConfiguration()).check();
+		model.setConfigurationCheck();
+	}
 
-	public void promotePawn(AbstractPiece piece) {
-		model.setConfiguration(new Rules(model.getConfiguration()).promotePawn(piece));
-		
+	public int checkMate() {
+		return new Rules(model.getConfiguration()).checkMate();
 	}
 }

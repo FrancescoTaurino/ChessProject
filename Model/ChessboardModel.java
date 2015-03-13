@@ -28,11 +28,15 @@ public class ChessboardModel implements Model {
 			if (view != null)
 				view.onConfiguration();
 	}
-
+	
 	public void setConfigurationLight(ArrayList<Point> list) {
 		if(view != null)
 			view.onConfigurationLight(list);
-		
+	}
+	
+	public void setConfigurationCheck() {
+		if(view != null)
+			view.onConfigurationCheck();
 	}
 	
 	public void setView(View listener) {

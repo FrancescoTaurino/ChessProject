@@ -16,8 +16,8 @@ public interface Controller {
 	//Starts a new game
 	void newGame();
 	
-	//Checks if game is solved: int > 0 Black wins, int < 0 White wins
-	int isSolved();
+	//Check checkmate
+	public int checkMate();
 	
 	//Menages a pawn promotion
 	int promotion();

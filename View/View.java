@@ -15,4 +15,5 @@ public interface View {
 	
 	void onConfiguration();
 	void onConfigurationLight(ArrayList<Point> list);
+	void onConfigurationCheck();
 }

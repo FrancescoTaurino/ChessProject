@@ -14,5 +14,6 @@ public interface Model {
 	//Set state changes
 	public void setConfiguration(Configuration configuration);
 	public void setConfigurationLight(ArrayList<Point> list);
+	public void setConfigurationCheck();
 	public void setView(View listener);
 }

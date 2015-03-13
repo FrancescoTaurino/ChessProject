@@ -43,6 +43,10 @@ public class Rules {
 		}
 		
 		return flag;
+	}	
+
+	public Configuration newGame() {
+		return new ChessboardConfiguration();
 	}
 	
 	private Point getCooPromotePawn() {
@@ -82,7 +86,139 @@ public class Rules {
 		
 		return flag;
 	}
+
+	public int checkMate() {
+		ArrayList<Point> result = new ArrayList<>();
+		int cont = 0;
+		
+		if(configuration.getCheck(1) == true) {
+			for(int x = 0; x < 8; x++) {
+				for(int y = 0; y < 8; y++) {
+					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryPawnCheck(Color.BLACK, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryRookCheck(Color.BLACK, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryKnightCheck(Color.BLACK, x, y, result); 
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryBishopCheck(Color.BLACK, x, y, result);
+						cont += result.size();	
+					}
+					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryQueenCheck(Color.BLACK, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == Color.BLACK) {
+						tryKingCheck(Color.BLACK, x, y, result);
+						cont += result.size();
+					}
+				}
+			}
+			return cont == 0 ? 1 : 0;
+		}	
+		else if(configuration.getCheck(0) == true) {
+			for(int x = 0; x < 8; x++) {
+				for(int y = 0; y < 8; y++) {
+					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryPawnCheck(Color.WHITE, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryRookCheck(Color.WHITE, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryKnightCheck(Color.WHITE, x, y, result); 
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryBishopCheck(Color.WHITE, x, y, result);
+						cont += result.size();	
+					}
+					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryQueenCheck(Color.WHITE, x, y, result);
+						cont += result.size();
+					}
+					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == Color.WHITE) {
+						tryKingCheck(Color.WHITE, x, y, result);
+						cont += result.size();
+					}
+				}
+			}
+			return cont == 0 ? -1 : 0;
+		}
+		return 0;
+	}
 	
+	private void tryAllMove(ArrayList<Point> allMove, Color kingInCheck) {
+		for(int y = 0; y < 8; y++) {
+			for(int x = 0; x < 8; x++) {
+				if(kingInCheck == Color.WHITE) {
+					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == kingInCheck)
+						tryPawn(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == kingInCheck)
+						tryRook(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == kingInCheck)
+						tryBishop(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == kingInCheck)
+						tryKnight(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == kingInCheck)
+						tryQueen(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == kingInCheck)
+						tryKing(kingInCheck, x, y, allMove);
+				}
+				else if(kingInCheck == Color.BLACK) {
+					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == kingInCheck)
+						tryPawn(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == kingInCheck)
+						tryRook(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == kingInCheck)
+						tryBishop(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == kingInCheck)
+						tryKnight(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == kingInCheck)
+						tryQueen(kingInCheck, x, y, allMove);
+					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == kingInCheck)
+						tryKing(kingInCheck, x, y, allMove);
+				}
+			}
+		}
+	}
+	
+	public void check() {
+		//If is white turn e white player has done its move
+		if(configuration.getTurn() == Color.WHITE && configuration.getFlagTurn() == false) {
+			if(kingUnderAttack(Color.BLACK) == true)
+				configuration.setCheck(1, true);
+			else
+				configuration.setCheck(1, false);
+		}
+		//If is black turn e black player has done its move
+		else if(configuration.getTurn() == Color.BLACK && configuration.getFlagTurn() == true) {
+			if(kingUnderAttack(Color.WHITE) == true)
+				configuration.setCheck(0, true);
+			else
+				configuration.setCheck(0, false);
+		}
+	}
+	
+	private boolean kingUnderAttack(Color kingInCheck) {
+		ArrayList<Point> allMove = new ArrayList<>();
+
+		//If white turn, looks for black king location and vice versa
+		Point kingLocation = configuration.getKingLocation(kingInCheck);
+		
+		tryAllMove(allMove, kingInCheck == Color.WHITE ? Color.BLACK : Color.WHITE);
+		
+		return allMove.contains(kingLocation) ? true : false ;
+	}
+
 	public Configuration move(int x, int y, ArrayList<Point> list) {
 		int X = (int) list.get(0).getX();
 		int Y = (int) list.get(0).getY();
@@ -92,8 +228,8 @@ public class Rules {
 			
 		//If list contains the clicked location then move
 		if(list.contains(new Point(x, y)))
-			capture(X, Y, x, y);
-				
+			capture(X, Y, x, y);	
+		
 		return configuration;
 	}
 			
@@ -106,8 +242,11 @@ public class Rules {
 					
 		configuration.set(X, Y, new NullPiece(Color.NULL));
 		}
+		
+		//Menages check
+		configuration.setCheck(configuration.getTurn() == Color.WHITE ? 0 : 1, false);
 					
-		//Change turn
+		//Change flagTurn
 		configuration.setFlagTurn(configuration.getFlagTurn() == true ? false : true);
 	}
 
@@ -121,19 +260,81 @@ public class Rules {
 		Color pieceColor = piece.getColor();
 		
 		if(piece instanceof Pawn) 
-			tryPawn(pieceColor, x, y, result);
+			tryPawnCheck(pieceColor, x, y, result);
 		else if(piece instanceof Rook)
-			tryRook(pieceColor, x, y, result);
-		else if(piece instanceof Knight)
-			tryKnight(pieceColor, x, y, result);
-		else if(piece instanceof Bishop)
-			tryBishop(pieceColor, x, y, result);
-		else if(piece instanceof Queen)
-			tryQueen(pieceColor, x, y, result);
-		else if(piece instanceof King)
-			tryKing(pieceColor, x, y, result);
-		
+			tryRookCheck(pieceColor, x, y, result);
+		else if(piece instanceof Knight) {
+			tryKnightCheck(pieceColor, x, y, result);
+		}
+		else if(piece instanceof Bishop) {
+			tryBishopCheck(pieceColor, x, y, result);
+		}
+		else if(piece instanceof Queen) {
+			tryQueenCheck(pieceColor, x, y, result);
+		}
+		else if(piece instanceof King) {
+			tryKingCheck(pieceColor, x, y, result);
+		}
+
 		return result;
+	}
+	
+	private void tryMoveCheck(Color color, int x, int y, ArrayList<Point> possibleMove,  ArrayList<Point> result) {
+		AbstractPiece temp;
+		
+		for(Point p: possibleMove) {
+			temp = configuration.at((int) p.getX(), (int) p.getY());
+			configuration.swap(x, y, (int) p.getX(), (int) p.getY());
+			configuration.set(x, y, new NullPiece(Color.NULL));
+			
+			if(kingUnderAttack(color) == false)
+				result.add(p);
+			
+			configuration.swap((int) p.getX(), (int) p.getY(), x, y);
+			configuration.set((int) p.getX(), (int) p.getY(), temp);
+		}
+	}
+	
+	private void tryKingCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryKing(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
+	}
+
+	private void tryQueenCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryQueen(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
+	}
+
+	private void tryBishopCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryBishop(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
+	}
+
+	private void tryKnightCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryKnight(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
+	}
+
+	private void tryRookCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryRook(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
+	}
+
+	private void tryPawnCheck(Color color, int x, int y, ArrayList<Point> result) {
+		ArrayList<Point> possibleMove = new ArrayList<>();
+		
+		tryPawn(color, x, y, possibleMove);
+		tryMoveCheck(color, x, y, possibleMove, result);
 	}
 	
 	private void tryKing(Color color, int x, int y, ArrayList<Point> result) {
@@ -681,7 +882,7 @@ public class Rules {
 		}
 		else {
 			if(x == 1) {
-				if(configuration.at(x + 1, y).getColor() == Color.NULL) {
+				if(configuration.at(x + 1, y).getColor() == Color.NULL && configuration.at(x + 2, y).getColor() == Color.NULL) {
 					result.add(new Point(x + 1, y));
 					result.add(new Point(x + 2, y));
 				}
@@ -696,9 +897,5 @@ public class Rules {
 				if (configuration.at(x + 1, y - 1).getColor() == Color.WHITE)
 					result.add(new Point(x + 1, y - 1));
 		}
-	}
-
-	public Configuration newGame() {
-		return new ChessboardConfiguration();
 	}
 }

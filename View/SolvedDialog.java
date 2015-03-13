@@ -22,7 +22,7 @@ public class SolvedDialog extends JDialog {
 		JPanel northPanel = new JPanel();
 		JPanel southPanel = new JPanel();
 		
-		JLabel finish = new JLabel(controller.isSolved() > 0 ? "BLACK WINS!" : "WHITE WINS!");
+		JLabel finish = new JLabel(controller.checkMate() > 0 ? "CHECKMATE, WHITE WINS!" : "CHECKMATE, BLACK WINS!");
 		finish.setFont(new Font("Courier New", Font.CENTER_BASELINE, 30));
 		finish.setHorizontalAlignment(JLabel.CENTER);
 		northPanel.add(finish);
@@ -45,9 +45,11 @@ public class SolvedDialog extends JDialog {
 		southPanel.add(quit);
 		add(southPanel, BorderLayout.CENTER);
 		
-		setPreferredSize(new Dimension(300, 100));
+		setPreferredSize(new Dimension(420, 100));
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width/2 - 150, dim.height/2 - 50);
+		int panelWidth = (int) (getPreferredSize().getWidth() / 2);
+		int panelHeight = (int) (getPreferredSize().getHeight() / 2);
+		setLocation(dim.width/2 - panelWidth, dim.height/2 - panelHeight);
 		
 		setResizable(false);
 		setUndecorated(true);
