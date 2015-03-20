@@ -6,15 +6,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 import Controller.ChessboardController;
 import Controller.Controller;
 import Model.ChessboardConfiguration;
-import Model.ChessboardModel;
+import Model.ChessboardModel;import Model.Configuration;
 
 public class ChessboardFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -22,12 +24,32 @@ public class ChessboardFrame extends JFrame {
 	
 	public ChessboardFrame() {
 		ChessboardPanel panel = new ChessboardPanel(model, this);
+		//panel.setPreferredSize(new Dimension(600, 600));
 		add(panel, BorderLayout.CENTER);
 
 		Controller controller = new ChessboardController(panel);
 		
 		JPanel northPanel = new JPanel();
-		northPanel.setLayout(new GridLayout(1, 2));
+		northPanel.setLayout(new GridLayout(1, 3));
+		
+		JButton hint = new JButton("Hints Enabled");
+		hint.setFont(new Font("title", Font.ITALIC, 20));
+		hint.setContentAreaFilled(false);
+		hint.setFocusPainted(false);
+		hint.setToolTipText("Game illuminates of red all the possible moves of a clicked piece");
+		hint.addActionListener(event -> {
+			Configuration c = model.getConfiguration();
+			if(c.getHint() == true) {
+				c.setHint(false);
+				hint.setText("Hints Disabled");
+				hint.setToolTipText("Game illuminates of gray only the clicked piece");
+			}
+			else if(c.getHint() == false) {
+				c.setHint(true);
+				hint.setText("Hints Enabled");
+				hint.setToolTipText("Game illuminates of red all the possible moves of a clicked piece");
+			}
+		});
 		
 		JButton newGame = new JButton("New Game");
 		newGame.setFont(new Font("title", Font.ITALIC, 20));
@@ -35,6 +57,8 @@ public class ChessboardFrame extends JFrame {
 		newGame.setFocusPainted(false);
 		newGame.addActionListener(event -> {
 			controller.newGame();
+			hint.setText("Hints Enabled");
+			hint.setToolTipText("Game illuminates of red all the possible moves of a clicked piece");
 		});
 		
 		JButton quit = new JButton("Quit");
@@ -46,6 +70,7 @@ public class ChessboardFrame extends JFrame {
 		});
 		
 		northPanel.add(newGame);
+		northPanel.add(hint);
 		northPanel.add(quit);
 		add(northPanel, BorderLayout.NORTH);
 

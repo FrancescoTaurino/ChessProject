@@ -19,18 +19,14 @@ public class ChessboardController implements Controller {
 		
 		view.setController(this);
 	}
-
-	public void light(int x, int y) {
-		mover.light(x, y);
-	}
-
+	
 	public void move(int x, int y, ArrayList<Point> list) {
 		mover.move(x, y, list);	
 		if(promotion() != 0)
 			view.showPromotionDialog();
 		
 		mover.check();
-		if(checkMate() != 0)
+		if(checkMate() != 0 || staleMate() != 0)
 			view.showSolvedDialog();
 		
 		Configuration configuration = view.getModel().getConfiguration();
@@ -45,6 +41,10 @@ public class ChessboardController implements Controller {
 		return mover.checkMate();
 	}
 	
+	public int staleMate() {
+		return mover.staleMate();
+	}
+	
 	public int promotion() {
 		return mover.promotion();
 	}
@@ -55,5 +55,9 @@ public class ChessboardController implements Controller {
 
 	public void promotePawn(AbstractPiece piece) {
 		mover.promotePawn(piece);
+	}
+	
+	public void light(int x, int y) {
+		mover.light(x, y);
 	}
 }

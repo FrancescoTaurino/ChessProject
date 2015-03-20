@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import View.ChessboardFrame;
+import View.StartingMenu;
 
 
 public class ChessboardMain {
@@ -12,7 +12,7 @@ public class ChessboardMain {
 		EventQueue.invokeLater(new Runnable() {
 			
 			public void run() {
-				JFrame frame  = new ChessboardFrame();
+				JFrame frame  = new StartingMenu();
 				frame.setTitle("Chess");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);

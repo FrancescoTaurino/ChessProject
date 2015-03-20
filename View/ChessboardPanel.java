@@ -43,6 +43,12 @@ public class ChessboardPanel extends JPanel implements View {
 		model.setView(this);
 	}
 	
+	//Draw an image of a chessboard as background
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(new ImageIcon("src/Images/Chessboard.png").getImage(), 0, 0, null);
+	}
+	
 	//Create all the buttons of the chessboard
 	private void createButtons() {
 		setLayout(new GridLayout(8, 8));
@@ -92,8 +98,6 @@ public class ChessboardPanel extends JPanel implements View {
 		return p;
 	}	
 	
-	//chess.setRolloverIcon(new ImageIcon("Images/chess2.png"));
-	//Set the right icon for every piece on the chessboard
 	private void iconSetter(JButton p, int x, int y) {
 		AbstractPiece piece = model.at(x, y);
 		
@@ -157,12 +161,6 @@ public class ChessboardPanel extends JPanel implements View {
 		}
 		else
 			p.setIcon(new ImageIcon("src/Images/NullPiece.png"));
-	}
-	
-	//Draw an image of a chessboard as background
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(new ImageIcon("src/Images/Chessboard.png").getImage(), 0, 0, null);
 	}
 	
 	public void onConfiguration() {
@@ -244,9 +242,11 @@ public class ChessboardPanel extends JPanel implements View {
 		list.remove(0);
 			
 		//Lights up of red all the positions on which piece can move
-		for(Point p: list) {
-			buttons[(int) p.getX()][(int) p.getY()].setContentAreaFilled(true);
-			buttons[(int) p.getX()][(int) p.getY()].setBackground(java.awt.Color.RED);
+		if(model.getConfiguration().getHint()) {
+			for(Point p: list) {
+				buttons[(int) p.getX()][(int) p.getY()].setContentAreaFilled(true);
+				buttons[(int) p.getX()][(int) p.getY()].setBackground(java.awt.Color.RED);
+			}
 		}
 	}
 	

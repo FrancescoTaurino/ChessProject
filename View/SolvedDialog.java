@@ -1,10 +1,10 @@
 package View;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -19,33 +19,35 @@ public class SolvedDialog extends JDialog {
 	public SolvedDialog(JFrame frame, Controller controller) {
 		super(frame, "Game Solved", true);
 		
-		JPanel northPanel = new JPanel();
-		JPanel southPanel = new JPanel();
+		JPanel menu = new JPanel();
+		menu.setLayout(null);
 		
-		JLabel finish = new JLabel(controller.checkMate() > 0 ? "CHECKMATE, WHITE WINS!" : "CHECKMATE, BLACK WINS!");
-		finish.setFont(new Font("Courier New", Font.CENTER_BASELINE, 30));
-		finish.setHorizontalAlignment(JLabel.CENTER);
-		northPanel.add(finish);
-		add(northPanel, BorderLayout.NORTH);
-
-		JButton newGame = new JButton("NEW GAME");
-		newGame.setFocusPainted(false);
-		newGame.addActionListener(event -> {
-			controller.newGame();
+		JLabel cornice = new JLabel(new ImageIcon("src/Images/Cornice.png"));
+		cornice.setBounds(0, 0, 420, 100);
+		
+		JLabel text = new JLabel();
+		if(controller.checkMate() != 0) 
+			text.setText(controller.checkMate() > 0 ? "CHECKMATE, WHITE WINS!" : "CHECKMATE, BLACK WINS!");
+		else if(controller.staleMate() != 0)
+			text.setText("STALEMATE!");
+		text.setFont(new Font("", Font.CENTER_BASELINE, 20));
+		text.setHorizontalAlignment(JLabel.CENTER);
+		text.setBounds(0, 10, 420, 30);
+		
+		JButton look = new JButton("TAKE A LOOK AT CHESSBOARD!");
+		look.setFont(new Font("", Font.CENTER_BASELINE, 15));
+		look.setContentAreaFilled(false);
+		look.setFocusPainted(false);
+		look.setBounds(61, 50, 300, 35);
+		look.addActionListener(event -> {
 			setVisible(false);
 		});
 		
-		JButton quit = new JButton("QUIT");
-		quit.setFocusPainted(false);
-		quit.addActionListener(event -> {
-			System.exit(0);
-		});
-
-		southPanel.add(newGame);
-		southPanel.add(quit);
-		add(southPanel, BorderLayout.CENTER);
-		
 		setPreferredSize(new Dimension(420, 100));
+		menu.add(cornice);
+		menu.add(text);
+		menu.add(look);
+		add(menu);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		int panelWidth = (int) (getPreferredSize().getWidth() / 2);
 		int panelHeight = (int) (getPreferredSize().getHeight() / 2);

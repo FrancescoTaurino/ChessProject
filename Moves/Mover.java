@@ -32,11 +32,7 @@ public class Mover {
 	public boolean checkClickConditions(int x, int y) {
 		return new Rules(model.getConfiguration()).checkClickConditions(x, y);
 	}
-
-	public int isSolved() {
-		return new Rules(model.getConfiguration()).isSolved();
-	}
-
+	
 	public int promotion() {
 		return new Rules(model.getConfiguration()).promotion();
 	}
@@ -48,5 +44,9 @@ public class Mover {
 
 	public int checkMate() {
 		return new Rules(model.getConfiguration()).checkMate();
+	}
+	
+	public int staleMate() {
+		return new Rules(model.getConfiguration()).staleMate();
 	}
 }

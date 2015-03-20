@@ -19,8 +19,10 @@ public interface Controller {
 	//Check checkmate
 	public int checkMate();
 	
+	//Check stalemate
+	public int staleMate();
+	
 	//Menages a pawn promotion
 	int promotion();
-	void promotePawn(AbstractPiece piece);
-	
+	void promotePawn(AbstractPiece piece);	
 }

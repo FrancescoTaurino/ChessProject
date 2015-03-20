@@ -26,27 +26,10 @@ public class Rules {
 		return configuration.at(x, y).getColor() != Color.NULL && 
 				((configuration.getTurn() == Color.WHITE && configuration.at(x, y).getColor() == Color.WHITE) || 
 				(configuration.getTurn() == Color.BLACK && configuration.at(x, y).getColor() == Color.BLACK));
-	}
-	
-	public int isSolved() {
-		AbstractPiece piece;
-		int flag = 0;
-		
-		for(int x = 0; x < 8; x++) {
-			for(int y = 0; y < 8; y++) {
-				piece = configuration.at(x, y);
-				if(piece instanceof King && piece.getColor() == Color.BLACK)
-					flag++;
-				else if(piece instanceof King && piece.getColor() == Color.WHITE)
-					flag--;
-			}
-		}
-		
-		return flag;
 	}	
 
 	public Configuration newGame() {
-		return new ChessboardConfiguration();
+		return new ChessboardConfiguration(); 
 	}
 	
 	private Point getCooPromotePawn() {
@@ -87,6 +70,44 @@ public class Rules {
 		return flag;
 	}
 
+	public int staleMate() {
+		ArrayList<Point> result = new ArrayList<>();
+		int cont = 0;
+		
+		Color color = configuration.getTurn() == Color.WHITE ? Color.BLACK : Color.WHITE;
+		
+		for(int x = 0; x < 8; x++) {
+			for(int y = 0; y < 8; y++) {
+				if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == color) {
+					tryPawnCheck(color, x, y, result);
+					cont += result.size();
+				}
+				else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == color) {
+					tryRookCheck(color, x, y, result);
+					cont += result.size();
+				}
+				else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == color) {
+					tryKnightCheck(color, x, y, result); 
+					cont += result.size();
+				}
+				else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == color) {
+					tryBishopCheck(color, x, y, result);
+					cont += result.size();	
+				}
+				else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == color) {
+					tryQueenCheck(color, x, y, result);
+					cont += result.size();
+				}
+				else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == color) {
+					tryKingCheck(color, x, y, result);
+					cont += result.size();
+				}
+			}
+		}
+		
+		return cont == 0 ? 1 : 0; 
+	}
+	
 	public int checkMate() {
 		ArrayList<Point> result = new ArrayList<>();
 		int cont = 0;
@@ -120,9 +141,9 @@ public class Rules {
 					}
 				}
 			}
-			return cont == 0 ? 1 : 0;
+			return cont == 0 ? 1 : 0; //Return 1 if black king is in checkmate
 		}	
-		else if(configuration.getCheck(0) == true) {
+		if(configuration.getCheck(0) == true) {
 			for(int x = 0; x < 8; x++) {
 				for(int y = 0; y < 8; y++) {
 					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == Color.WHITE) {
@@ -151,9 +172,10 @@ public class Rules {
 					}
 				}
 			}
-			return cont == 0 ? -1 : 0;
+			return cont == 0 ? -1 : 0; //Return -1 if white king is in checkmate
 		}
-		return 0;
+		else	
+			return 0;
 	}
 	
 	private void tryAllMove(ArrayList<Point> allMove, Color kingInCheck) {
@@ -263,18 +285,14 @@ public class Rules {
 			tryPawnCheck(pieceColor, x, y, result);
 		else if(piece instanceof Rook)
 			tryRookCheck(pieceColor, x, y, result);
-		else if(piece instanceof Knight) {
+		else if(piece instanceof Knight) 
 			tryKnightCheck(pieceColor, x, y, result);
-		}
-		else if(piece instanceof Bishop) {
+		else if(piece instanceof Bishop)
 			tryBishopCheck(pieceColor, x, y, result);
-		}
-		else if(piece instanceof Queen) {
+		else if(piece instanceof Queen)
 			tryQueenCheck(pieceColor, x, y, result);
-		}
-		else if(piece instanceof King) {
+		else if(piece instanceof King) 
 			tryKingCheck(pieceColor, x, y, result);
-		}
 
 		return result;
 	}

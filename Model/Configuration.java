@@ -26,4 +26,7 @@ public interface Configuration {
 	
 	public void setCheck(int pos, boolean check);
 	public boolean getCheck(int pos);
+	
+	public void setHint(boolean hint);
+	public boolean getHint();
 }

@@ -20,7 +20,8 @@ public class ChessboardConfiguration implements Configuration {
 	private boolean flagTurn = true;
 	//Initially no check
 	private boolean[] check = {false, false};
-
+	//Hints or noHints
+	private boolean hint = true;
 	
 	public ChessboardConfiguration() {
 		//Set black pieces
@@ -137,12 +138,19 @@ public class ChessboardConfiguration implements Configuration {
 		return turn;
 	}
 
-
 	public void setCheck(int pos, boolean check) {
 		this.check[pos] = check;
 	}
 	
 	public boolean getCheck(int pos) {
 		return check[pos];
+	}
+	
+	public void setHint(boolean hint) {
+		this.hint = hint;
+	}
+	
+	public boolean getHint() {
+		return hint;
 	}
 }

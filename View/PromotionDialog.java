@@ -35,7 +35,7 @@ public class PromotionDialog extends JDialog {
 		
 		JPanel centerPanel = new JPanel();
 		ButtonGroup buttonGroup = new ButtonGroup();
-		JRadioButton queen = new JRadioButton(controller.promotion() < 0 ? "White Queen" : "Black Queen");
+		JRadioButton queen = new JRadioButton(controller.promotion() < 0 ? "White Queen" : "Black Queen", true);
 		queen.setFont(new Font("title", Font.ITALIC, 15));
 		queen.setFocusPainted(false);
 		buttonGroup.add(queen);
@@ -59,6 +59,8 @@ public class PromotionDialog extends JDialog {
 		
 		JPanel southPanel = new JPanel();
 		JButton ok = new JButton("OK");
+		ok.setContentAreaFilled(false);
+		ok.setFocusPainted(false);
 		
 		ok.addActionListener(event -> {
 			if(queen.isSelected())
