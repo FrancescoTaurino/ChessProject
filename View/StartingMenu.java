@@ -34,6 +34,7 @@ public class StartingMenu extends JFrame {
 		background.setBounds(0, 0, 550, 350);
 		
 		chess.addActionListener(event -> {
+			chess.setEnabled(false);
 			ChessboardFrame p = new ChessboardFrame();
 			p.setVisible(true);
 			setVisible(false);
