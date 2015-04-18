@@ -24,7 +24,6 @@ public class ChessboardFrame extends JFrame {
 	
 	public ChessboardFrame() {
 		ChessboardPanel panel = new ChessboardPanel(model, this);
-		//panel.setPreferredSize(new Dimension(600, 600));
 		add(panel, BorderLayout.CENTER);
 
 		Controller controller = new ChessboardController(panel);

@@ -233,7 +233,7 @@ public class ChessboardPanel extends JPanel implements View {
 	}
 	
 	public void onConfigurationLight(ArrayList<Point> list) {
-		//Lights up of gray selected pieces 
+		//Light up of gray selected pieces 
 		Point p1 = list.get(0);
 		buttons[(int) p1.getX()][(int) p1.getY()].setContentAreaFilled(true);
 		buttons[(int) p1.getX()][(int) p1.getY()].setBackground(java.awt.Color.GRAY);
@@ -241,7 +241,7 @@ public class ChessboardPanel extends JPanel implements View {
 		//Remove clicked piece from list
 		list.remove(0);
 			
-		//Lights up of red all the positions on which piece can move
+		//Light up of red all the positions on which piece can move
 		if(model.getConfiguration().getHint()) {
 			for(Point p: list) {
 				buttons[(int) p.getX()][(int) p.getY()].setContentAreaFilled(true);

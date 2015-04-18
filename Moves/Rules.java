@@ -110,72 +110,71 @@ public class Rules {
 	
 	public int checkMate() {
 		ArrayList<Point> result = new ArrayList<>();
-		int cont = 0;
 		
 		if(configuration.getCheck(1) == true) {
 			for(int x = 0; x < 8; x++) {
 				for(int y = 0; y < 8; y++) {
 					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryPawnCheck(Color.BLACK, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryRookCheck(Color.BLACK, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryKnightCheck(Color.BLACK, x, y, result); 
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryBishopCheck(Color.BLACK, x, y, result);
-						cont += result.size();	
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryQueenCheck(Color.BLACK, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == Color.BLACK) {
 						tryKingCheck(Color.BLACK, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 				}
 			}
-			return cont == 0 ? 1 : 0; //Return 1 if black king is in checkmate
+			return 1; //Black King in checkmate
 		}	
-		if(configuration.getCheck(0) == true) {
+		else if(configuration.getCheck(0) == true) {
 			for(int x = 0; x < 8; x++) {
 				for(int y = 0; y < 8; y++) {
 					if(configuration.at(x, y) instanceof Pawn && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryPawnCheck(Color.WHITE, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Rook && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryRookCheck(Color.WHITE, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Knight && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryKnightCheck(Color.WHITE, x, y, result); 
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Bishop && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryBishopCheck(Color.WHITE, x, y, result);
-						cont += result.size();	
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof Queen && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryQueenCheck(Color.WHITE, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 					else if(configuration.at(x, y) instanceof King && configuration.at(x, y).getColor() == Color.WHITE) {
 						tryKingCheck(Color.WHITE, x, y, result);
-						cont += result.size();
+						if(result.size() > 0) return 0;
 					}
 				}
 			}
-			return cont == 0 ? -1 : 0; //Return -1 if white king is in checkmate
+			return -1; //White King in checkmate
 		}
 		else	
-			return 0;
+			return 0; //No checkmate
 	}
 	
 	private void tryAllMove(ArrayList<Point> allMove, Color kingInCheck) {
@@ -214,14 +213,14 @@ public class Rules {
 	}
 	
 	public void check() {
-		//If is white turn e white player has done its move
+		//If is white turn and white player has done its move
 		if(configuration.getTurn() == Color.WHITE && configuration.getFlagTurn() == false) {
 			if(kingUnderAttack(Color.BLACK) == true)
 				configuration.setCheck(1, true);
 			else
 				configuration.setCheck(1, false);
 		}
-		//If is black turn e black player has done its move
+		//If is black turn and black player has done its move
 		else if(configuration.getTurn() == Color.BLACK && configuration.getFlagTurn() == true) {
 			if(kingUnderAttack(Color.WHITE) == true)
 				configuration.setCheck(0, true);
@@ -233,7 +232,7 @@ public class Rules {
 	private boolean kingUnderAttack(Color kingInCheck) {
 		ArrayList<Point> allMove = new ArrayList<>();
 
-		//If white turn, looks for black king location and vice versa
+		//If white turn, look for black king location and vice versa
 		Point kingLocation = configuration.getKingLocation(kingInCheck);
 		
 		tryAllMove(allMove, kingInCheck == Color.WHITE ? Color.BLACK : Color.WHITE);
@@ -258,14 +257,10 @@ public class Rules {
 	private void capture(int X, int Y, int x, int y) {
 		configuration.swap(X, Y, x, y);
 					
-		//If swapped pieces are opposite color then eat
-		if(configuration.at(X, Y).getColor() == Color.BLACK && configuration.at(x, y).getColor() == Color.WHITE ||
-			configuration.at(X, Y).getColor() == Color.WHITE && configuration.at(x, y).getColor() == Color.BLACK) {
-					
-		configuration.set(X, Y, new NullPiece(Color.NULL));
-		}
+		if(!(configuration.at(X, Y) instanceof NullPiece))	
+			configuration.set(X, Y, new NullPiece(Color.NULL));
 		
-		//Menages check
+		//Menage check
 		configuration.setCheck(configuration.getTurn() == Color.WHITE ? 0 : 1, false);
 					
 		//Change flagTurn

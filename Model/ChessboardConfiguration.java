@@ -18,7 +18,7 @@ public class ChessboardConfiguration implements Configuration {
 	//White starts 
 	private Color turn = Color.WHITE;
 	private boolean flagTurn = true;
-	//Initially no check
+	//Initially no check: 0 White, 1 Black
 	private boolean[] check = {false, false};
 	//Hints or noHints
 	private boolean hint = true;
@@ -89,7 +89,7 @@ public class ChessboardConfiguration implements Configuration {
 			Configuration otherConfiguration = (Configuration) other;
 			for (int y = 0; y < 8; y++)
 				for (int x = 0; x < 8; x++)
-					if (at(x, y) != (otherConfiguration.at(x, y)))
+					if (!(at(x, y).equals(otherConfiguration.at(x, y))))
 						return false;
 
 			return true;

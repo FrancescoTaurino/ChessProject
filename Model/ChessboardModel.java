@@ -23,7 +23,7 @@ public class ChessboardModel implements Model {
 	}
 
 	public void setConfiguration(Configuration newConfiguration) {
-		if(this.configuration != newConfiguration)
+		if(!(this.configuration.equals(newConfiguration)))
 			this.configuration = newConfiguration;
 			if (view != null)
 				view.onConfiguration();

@@ -21,17 +21,17 @@ public class StartingMenu extends JFrame {
 		chess.setBorderPainted(false);
 		chess.setIcon(new ImageIcon("src/Images/chess.png"));
 		chess.setRolloverIcon(new ImageIcon("src/Images/chess2.png"));
-		chess.setBounds(111, 5, 300, 120);
+		chess.setBounds(120, 20, 300, 120);
 		
-		JLabel credit = new JLabel(new ImageIcon("src/Images/credit2.png"));
-		credit.setBounds(121, 125, 280, 180);
+		JButton credit = new JButton();
+		credit.setContentAreaFilled(false);
+		credit.setBorderPainted(false);
+		credit.setIcon(new ImageIcon("src/Images/univr.png"));
+		credit.setRolloverIcon(new ImageIcon("src/Images/univr1.png"));
+		credit.setBounds(195, 150, 150, 150);
 		
 		JLabel background = new JLabel(new ImageIcon("src/Images/background.png"));
 		background.setBounds(0, 0, 550, 350);
-		
-		JLabel clickToPlay = new JLabel(new ImageIcon("src/Images/clicktoplay.png"));
-		clickToPlay.setBounds(20, 20, 90, 90);
-	
 		
 		chess.addActionListener(event -> {
 			ChessboardFrame p = new ChessboardFrame();
@@ -42,7 +42,6 @@ public class StartingMenu extends JFrame {
 		setPreferredSize(new Dimension(550, 350));
 		menu.add(credit);
 		menu.add(chess);
-		menu.add(clickToPlay);
 		menu.add(background);
 		add(menu);
 		
